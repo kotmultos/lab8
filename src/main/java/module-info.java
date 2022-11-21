@@ -4,6 +4,7 @@ module com.example.lab8 {
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
+    requires lombok;
 
     opens com.example.lab8 to javafx.fxml;
     exports com.example.lab8;
