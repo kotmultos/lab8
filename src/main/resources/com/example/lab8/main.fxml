@@ -94,7 +94,7 @@
                </textFill>
             </Label>
             <Button id="AddFloorButton" fx:id="AddFloorButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#onAddFloorButtonClicked" text="Додати поверх" />
-            <Button id="AddRoomButton" fx:id="AddRoomButton" layoutX="127.0" layoutY="36.0" mnemonicParsing="false" text="Додати кімнату" />
+            <Button id="AddRoomButton" fx:id="AddRoomButton" layoutX="127.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#onAddRoomButtonClick" text="Додати кімнату" />
             <Separator layoutY="181.0" prefHeight="3.0" prefWidth="454.0" />
             <Label layoutX="20.0" layoutY="81.0" text="Кількість дверей" />
             <Label layoutX="20.0" layoutY="116.0" text="Кількість вікон" />

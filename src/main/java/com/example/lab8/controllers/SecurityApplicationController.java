@@ -107,7 +107,19 @@ public class SecurityApplicationController implements Initializable {
 //        } else {
 //            BuildingStructureTableView.add()
 //        }
+    }
+    @FXML
+    public void onAddRoomButtonClick () {
+        try {
+            Integer doors = Integer.valueOf(RoomDoorsInput.getText());
+            Integer windows = Integer.valueOf(RoomsWindowsInput.getText());
+            Double square = Double.valueOf(RoomSquareInput.getText());
 
-
+            System.out.println(doors);
+            System.out.println(windows);
+            System.out.println(square);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
