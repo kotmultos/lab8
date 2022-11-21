@@ -109,10 +109,10 @@
             </Label>
             <TreeTableView id="BuildinfStructureTableView" layoutY="215.0" prefHeight="438.0" prefWidth="453.0">
                <columns>
-                  <TreeTableColumn id="StructureTableColumn" prefWidth="112.80001527070999" text="Структура" />
-                  <TreeTableColumn id="DoorsTableColumn" prefWidth="123.19998168945312" text="Кількість дверей" />
-                  <TreeTableColumn id="WindowsTableColumn" prefWidth="118.39997863769531" text="Кількість вікон" />
-                  <TreeTableColumn id="SquareTableColumn" prefWidth="96.79998779296875" text="Площа" />
+                  <TreeTableColumn id="StructureTableColumn" prefWidth="112.80001527070999" resizable="false" text="Структура" />
+                  <TreeTableColumn id="DoorsTableColumn" prefWidth="123.19998168945312" resizable="false" text="Кількість дверей" />
+                  <TreeTableColumn id="WindowsTableColumn" prefWidth="118.39997863769531" resizable="false" text="Кількість вікон" />
+                  <TreeTableColumn id="SquareTableColumn" prefWidth="96.79998779296875" resizable="false" text="Площа" />
                </columns>
             </TreeTableView>
             <Label alignment="CENTER" layoutX="136.0" layoutY="185.0" style="&#10;" text="Структура будівлі" textAlignment="CENTER" wrapText="false">
@@ -126,8 +126,8 @@
             <Separator layoutX="239.0" orientation="VERTICAL" prefHeight="181.0" prefWidth="6.0" />
             <TableView id="LogTableView" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
               <columns>
-                <TableColumn id="TimeTableColumn" prefWidth="216.79995727539062" text="Час події" />
-                <TableColumn id="DescriptionTableColumn" prefWidth="320.0" text="Опис" />
+                <TableColumn id="TimeTableColumn" prefWidth="216.79995727539062" resizable="false" text="Час події" />
+                <TableColumn id="DescriptionTableColumn" prefWidth="320.0" resizable="false" text="Опис" />
               </columns>
             </TableView>
             <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="190.0" prefWidth="5.0" style="-fx-min-height: 650;" />
