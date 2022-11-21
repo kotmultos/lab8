@@ -10,7 +10,7 @@ import models.Floor;
 import models.Room;
 
 import java.net.URL;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -82,13 +82,13 @@ public class SecurityApplicationController implements Initializable {
         CurrentTimeLabel.setText(currentTime.format(formatter));
         System.out.println("initialization");
 
-        try {
-            StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Структура"));
-            BuildingStructureTableView.setRoot(new TreeItem<>(new Room("hello")));
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Структура"));
+//            BuildingStructureTableView.setRoot(new TreeItem<>(new Room("hello")));
+//        }
+//        catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
 
     }
 
