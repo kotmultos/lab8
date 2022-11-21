@@ -55,22 +55,22 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab8.controllers.SecurityApplicationController">
   <children>
     <MenuBar id="MenuBar" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Файл">
           <items>
-            <MenuItem id="LoadMenuItem" mnemonicParsing="false" text="Завантажити з файлу" />
-          <MenuItem id="SaveMenuItem" mnemonicParsing="false" text="Зберегти" />
-          <MenuItem id="ClearMenuitem" mnemonicParsing="false" text="Очистити" />
+            <MenuItem id="LoadMenuItem" fx:id="LoadMenuItem" mnemonicParsing="false" text="Завантажити з файлу" />
+          <MenuItem id="SaveMenuItem" fx:id="SaveMenuItem" mnemonicParsing="false" text="Зберегти" />
+          <MenuItem id="ClearMenuitem" fx:id="ClearMenuitem" mnemonicParsing="false" text="Очистити" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem id="ExitMenuItem" mnemonicParsing="false" text="Вийти" />
+            <MenuItem id="ExitMenuItem" fx:id="ExitMenuItem" mnemonicParsing="false" text="Вийти" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Допомога">
           <items>
-            <MenuItem id="AboutMenuItem" mnemonicParsing="false" text="Про Security Application" />
+            <MenuItem id="AboutMenuItem" fx:id="AboutMenuItem" mnemonicParsing="false" text="Про Security Application" />
           </items>
         </Menu>
       </menus>
@@ -93,8 +93,8 @@
                   <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
                </textFill>
             </Label>
-            <Button id="AddFloorButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" text="Додати поверх" />
-            <Button id="AddRoomButton" layoutX="127.0" layoutY="36.0" mnemonicParsing="false" text="Додати кімнату" />
+            <Button id="AddFloorButton" fx:id="AddFloorButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#onAddFloorButtonClicked" text="Додати поверх" />
+            <Button id="AddRoomButton" fx:id="AddRoomButton" layoutX="127.0" layoutY="36.0" mnemonicParsing="false" text="Додати кімнату" />
             <Separator layoutY="181.0" prefHeight="3.0" prefWidth="454.0" />
             <Label layoutX="20.0" layoutY="81.0" text="Кількість дверей" />
             <Label layoutX="20.0" layoutY="116.0" text="Кількість вікон" />
@@ -107,12 +107,12 @@
                   <Color red="0.624" green="0.624" blue="0.624" fx:id="x6" />
                </textFill>
             </Label>
-            <TreeTableView id="BuildinfStructureTableView" layoutY="215.0" prefHeight="438.0" prefWidth="453.0">
+            <TreeTableView fx:id="BuildingStructureTableView" layoutY="215.0" prefHeight="438.0" prefWidth="448.0">
                <columns>
-                  <TreeTableColumn id="StructureTableColumn" prefWidth="112.80001527070999" resizable="false" text="Структура" />
-                  <TreeTableColumn id="DoorsTableColumn" prefWidth="123.19998168945312" resizable="false" text="Кількість дверей" />
-                  <TreeTableColumn id="WindowsTableColumn" prefWidth="118.39997863769531" resizable="false" text="Кількість вікон" />
-                  <TreeTableColumn id="SquareTableColumn" prefWidth="96.79998779296875" resizable="false" text="Площа" />
+                  <TreeTableColumn fx:id="StructureTableColumn" prefWidth="112.80001527070999" resizable="false" text="Структура" />
+                  <TreeTableColumn id="DoorsTableColumn" fx:id="DoorsTableColumn" prefWidth="123.19998168945312" resizable="false" text="Кількість дверей" />
+                  <TreeTableColumn id="WindowsTableColumn" fx:id="WindowsTableColumn" prefWidth="118.39997863769531" resizable="false" text="Кількість вікон" />
+                  <TreeTableColumn id="SquareTableColumn" fx:id="SquareTableColumn" prefWidth="96.79998779296875" resizable="false" text="Площа" />
                </columns>
             </TreeTableView>
             <Label alignment="CENTER" layoutX="136.0" layoutY="185.0" style="&#10;" text="Структура будівлі" textAlignment="CENTER" wrapText="false">
@@ -124,26 +124,26 @@
                </textFill>
             </Label>
             <Separator layoutX="239.0" orientation="VERTICAL" prefHeight="181.0" prefWidth="6.0" />
-            <TableView id="LogTableView" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
+            <TableView id="LogTableView" fx:id="LogTableView1" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
               <columns>
-                <TableColumn id="TimeTableColumn" prefWidth="216.79995727539062" resizable="false" text="Час події" />
-                <TableColumn id="DescriptionTableColumn" prefWidth="320.0" resizable="false" text="Опис" />
+                <TableColumn id="TimeTableColumn" fx:id="TimeTableColumn1" prefWidth="216.79995727539062" resizable="false" text="Час події" />
+                <TableColumn id="DescriptionTableColumn" fx:id="DescriptionTableColumn1" prefWidth="320.0" resizable="false" text="Опис" />
               </columns>
             </TableView>
             <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="190.0" prefWidth="5.0" style="-fx-min-height: 650;" />
-            <TextField id="RoomDoorsInput" layoutX="126.0" layoutY="76.0" prefHeight="26.0" prefWidth="101.0" />
-            <TextField id="RoomsWindowsInput" layoutX="126.0" layoutY="111.0" prefHeight="26.0" prefWidth="101.0" />
-            <TextField id="RoomSquareInput" layoutX="126.0" layoutY="146.0" prefHeight="26.0" prefWidth="101.0" />
-            <ComboBox id="FloorComboBox" layoutX="251.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Поверх" />
-            <ComboBox id="RoomComboBox" layoutX="352.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Кімната" />
-            <RadioButton id="TemperatureRadioButton" layoutX="253.0" layoutY="75.0" mnemonicParsing="false" selected="true" text="Температура">
+            <TextField id="RoomDoorsInput" fx:id="RoomDoorsInput" layoutX="126.0" layoutY="76.0" prefHeight="26.0" prefWidth="101.0" />
+            <TextField id="RoomsWindowsInput" fx:id="RoomsWindowsInput" layoutX="126.0" layoutY="111.0" prefHeight="26.0" prefWidth="101.0" />
+            <TextField id="RoomSquareInput" fx:id="RoomSquareInput" layoutX="126.0" layoutY="146.0" prefHeight="26.0" prefWidth="101.0" />
+            <ComboBox id="FloorComboBox" fx:id="FloorComboBox" layoutX="251.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Поверх" />
+            <ComboBox id="RoomComboBox" fx:id="RoomComboBox" layoutX="352.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Кімната" />
+            <RadioButton id="TemperatureRadioButton" fx:id="TemperatureRadioButton" layoutX="253.0" layoutY="75.0" mnemonicParsing="false" selected="true" text="Температура">
                <toggleGroup>
                   <ToggleGroup fx:id="SituationRadioGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton id="PressureRadioButton" layoutX="253.0" layoutY="100.0" mnemonicParsing="false" text="Тиск" toggleGroup="$SituationRadioGroup" />
-            <RadioButton id="MovementRadioButton" layoutX="253.0" layoutY="125.0" mnemonicParsing="false" text="Рух" toggleGroup="$SituationRadioGroup" />
-            <Button id="CreateSituationButton" layoutX="359.0" layoutY="142.0" mnemonicParsing="false" text="Генерувати" />
+            <RadioButton id="PressureRadioButton" fx:id="PressureRadioButton" layoutX="253.0" layoutY="100.0" mnemonicParsing="false" text="Тиск" toggleGroup="$SituationRadioGroup" />
+            <RadioButton id="MovementRadioButton" fx:id="MovementRadioButton" layoutX="253.0" layoutY="125.0" mnemonicParsing="false" text="Рух" toggleGroup="$SituationRadioGroup" />
+            <Button id="CreateSituationButton" fx:id="CreateSituationButton" layoutX="359.0" layoutY="142.0" mnemonicParsing="false" text="Генерувати" />
          </children>
       </AnchorPane>
     <HBox id="StatusBar" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
@@ -157,7 +157,7 @@
           </textFill>
         </Label>
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-        <Label id="CurrentTimeLabel" font="$x3" maxWidth="-1.0" text="Поточний час вивести" textFill="$x4" HBox.hgrow="NEVER" />
+        <Label id="CurrentTimeLabel" fx:id="CurrentTimeLabel" font="$x3" maxWidth="-1.0" text="Поточний час вивести" textFill="$x4" HBox.hgrow="NEVER" />
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

@@ -1,4 +1,4 @@
-package com.example.lab8;
+package com.example.lab8.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -6,9 +6,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import models.Building;
+import models.Floor;
+import models.Room;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SecurityApplicationController implements Initializable {
@@ -29,7 +33,7 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private Button CreateSituationButton;
     @FXML
-    private TreeTableView BuildinfStructureTableView;
+    private TreeTableView BuildingStructureTableView;
     @FXML
     private TreeTableView LogTableView;
     @FXML
@@ -65,14 +69,45 @@ public class SecurityApplicationController implements Initializable {
 
     private Building building;
 
+    private LocalDateTime currentTime;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         building = new Building();
-
+        Room room = new Room(2, 4, 5);
+        Floor floor = new Floor();
+        floor.addRoom(room);
+        building.addFloor(floor);
+        currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        CurrentTimeLabel.setText(currentTime.format(formatter));
         System.out.println("initialization");
+
+        try {
+            StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Структура"));
+            BuildingStructureTableView.setRoot(new TreeItem<>(new Room("hello")));
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    public void onAddFloorClick() {
-        System.out.println("clicked");
+    @FXML
+    protected void onAddFloorButtonClicked () {
+        try {
+            building.addFloor(new Floor());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(building.toString());
+//
+//        if (BuildingStructureTableView.getRoot() != null) {
+//
+//        } else {
+//            BuildingStructureTableView.add()
+//        }
+
+
     }
 }
