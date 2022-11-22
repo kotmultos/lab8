@@ -1,5 +1,6 @@
 package com.example.lab8.controllers;
 
+import com.example.lab8.Starter;
 import com.example.lab8.logs.Log;
 import com.example.lab8.logs.LogCallback;
 import javafx.animation.Animation;
@@ -292,21 +293,21 @@ public class SecurityApplicationController implements Initializable {
                     try {
                         fileOutputStream.write((log.toString()).getBytes());
                     } catch (IOException e){
-                        System.out.println("IoException in SecurityApplicationController: " + e.getMessage());
+                        System.out.println("IoException in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
                     } catch (Exception e){
-                        System.out.println("Exception in SecurityApplicationController: " + e.getMessage());
+                        System.out.println("Exception in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
                     }
 
                     logsList.add(0, log);
                 }
             };
 
-//            Starter starter = new Starter();
-//            try {
-//                starter.start(building, callback);
-//            } catch (InterruptedException e) {
-//                System.out.println("Interrupted Exception in MainController.startSimulation(). With message: " + e.getMessage());
-//            }
+            Starter starter = new Starter();
+            try {
+                starter.start(building, callback);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
+            }
         }
     }
 }

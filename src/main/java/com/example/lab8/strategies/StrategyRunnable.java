@@ -4,14 +4,16 @@ import com.example.lab8.logs.LogCallback;
 import com.example.lab8.models.Building;
 import com.example.lab8.models.Floor;
 import com.example.lab8.models.Room;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Random;
 
 @Data
+@AllArgsConstructor
 public class StrategyRunnable implements Runnable{
-    private LogCallback logCallback;
     private Building building;
+    private LogCallback logCallback;
     @Override
     public void run() {
         while (true){

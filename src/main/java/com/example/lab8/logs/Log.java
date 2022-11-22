@@ -18,4 +18,9 @@ public class Log implements Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         return LocalDateTime.now().format(formatter);
     }
+
+    @Override
+    public String toString() {
+        return getTime() + " : " + message + "\n";
+    }
 }

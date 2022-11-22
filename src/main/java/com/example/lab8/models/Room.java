@@ -25,12 +25,14 @@ public class Room implements Serializable {
         movementSensorsCount = doorsCount + windowsCount;
         pressureSensorsCount = 2 * (doorsCount + windowsCount);
         temperatureSensorsCount = (int)square / 30 + 1;
+        soundSensorsCount = 4;
         detectedEventList = new ArrayList<>();
     }
 
     private Integer pressureSensorsCount;
     private Integer temperatureSensorsCount;
     private Integer movementSensorsCount;
+    private Integer soundSensorsCount;
 
     private List<DetectedEvent> detectedEventList;
 }
