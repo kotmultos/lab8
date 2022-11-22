@@ -2,6 +2,7 @@ package com.example.lab8.strategies;
 
 import com.example.lab8.detectedEvents.DetectedEvent;
 import com.example.lab8.detectedEvents.DetectedEventType;
+import com.example.lab8.detectedEvents.EventHelper;
 import com.example.lab8.logs.Log;
 import com.example.lab8.logs.LogCallback;
 import com.example.lab8.models.Room;
@@ -24,7 +25,8 @@ public class FrequentStrategy extends Strategy {
         Random random = new Random();
         int number = random.nextInt(1, 1000);
         if(number >= 1 && number <= 400){
-            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : Виявлено рух",
+            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : " +
+                    EventHelper.getDescription(DetectedEventType.MovementEvent),
                     LocalDateTime.now(), DetectedEventType.MovementEvent);
             room.getDetectedEventList().add(detectedEvent);
             try {
@@ -40,7 +42,8 @@ public class FrequentStrategy extends Strategy {
         Random random = new Random();
         int number = random.nextInt(1, 1000);
         if(number >= 1 && number <= 400){
-            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : Перевищення тиску",
+            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : " +
+                    EventHelper.getDescription(DetectedEventType.PressureEvent),
                     LocalDateTime.now(), DetectedEventType.PressureEvent);
             room.getDetectedEventList().add(detectedEvent);
             try {
@@ -56,7 +59,8 @@ public class FrequentStrategy extends Strategy {
         Random random = new Random();
         int number = random.nextInt(1, 1000);
         if(number >= 1 && number <= 400){
-            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : Температура за межами норми",
+            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : " +
+                    EventHelper.getDescription(DetectedEventType.TemperatureEvent),
                     LocalDateTime.now(), DetectedEventType.TemperatureEvent);
             room.getDetectedEventList().add(detectedEvent);
             try {
@@ -71,7 +75,8 @@ public class FrequentStrategy extends Strategy {
         Random random = new Random();
         int number = random.nextInt(1, 1000);
         if(number >= 1 && number <= 400){
-            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : Виявлено шум",
+            DetectedEvent detectedEvent = new DetectedEvent(floorName + " " + room.getName() + " : " +
+                    EventHelper.getDescription(DetectedEventType.SoundEvent),
                     LocalDateTime.now(), DetectedEventType.SoundEvent);
             room.getDetectedEventList().add(detectedEvent);
             try {

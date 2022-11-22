@@ -1,6 +1,10 @@
 package com.example.lab8.controllers;
 
 import com.example.lab8.Starter;
+import com.example.lab8.StarterRunnable;
+import com.example.lab8.detectedEvents.DetectedEvent;
+import com.example.lab8.detectedEvents.DetectedEventType;
+import com.example.lab8.detectedEvents.EventHelper;
 import com.example.lab8.logs.Log;
 import com.example.lab8.logs.LogCallback;
 import javafx.animation.Animation;
@@ -28,6 +32,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SecurityApplicationController implements Initializable {
@@ -76,7 +81,7 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private ComboBox<Floor> FloorComboBox;
     @FXML
-    private ComboBox RoomComboBox;
+    private ComboBox<Room> RoomComboBox;
     @FXML
     private RadioButton TemperatureRadioButton;
     @FXML
@@ -95,6 +100,10 @@ public class SecurityApplicationController implements Initializable {
     private boolean isSimulationStarted;
 
     private Starter starter;
+
+    private DetectedEventType chosenEventType = DetectedEventType.TemperatureEvent;
+
+    private LogCallback callback;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         building = new Building();
@@ -223,6 +232,9 @@ public class SecurityApplicationController implements Initializable {
             root.setExpanded(true);
             LogTableView.getItems().clear();
             building = new Building();
+
+            FloorComboBox.getItems().clear();
+            RoomComboBox.getItems().clear();
         }
     }
 
@@ -259,14 +271,16 @@ public class SecurityApplicationController implements Initializable {
     }
 
     public synchronized void onSaveMenuItemAction(ActionEvent actionEvent) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream("recentBuildingData.ser");
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(building);
-            objectOutputStream.close();
-            fileOutputStream.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        if (building.getFloorList().size() != 0) {
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream("recentBuildingData.ser");
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(building);
+                objectOutputStream.close();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -283,7 +297,7 @@ public class SecurityApplicationController implements Initializable {
         if (!isSimulationStarted) {
             isSimulationStarted = true;
             FileOutputStream fileOutputStream = new FileOutputStream("logs.txt");
-            LogCallback callback = new LogCallback() {
+            callback = new LogCallback() {
                 @Override
                 public synchronized void onLogCreation(Log log) {
                     try {
@@ -311,6 +325,42 @@ public class SecurityApplicationController implements Initializable {
         if(isSimulationStarted) {
             starter.stop();
             isSimulationStarted = false;
+        }
+    }
+
+    public void onTempeatureRadioButtonAction(ActionEvent actionEvent) {
+        chosenEventType = DetectedEventType.TemperatureEvent;
+    }
+
+    public void onPressureRadioButtonAction(ActionEvent actionEvent) {
+        chosenEventType = DetectedEventType.PressureEvent;
+    }
+
+    public void onSoundRadioButtonAction(ActionEvent actionEvent) {
+        chosenEventType = DetectedEventType.SoundEvent;
+    }
+
+    public void onMovementRadioButtonAction(ActionEvent actionEvent) {
+        chosenEventType = DetectedEventType.MovementEvent;
+    }
+
+    public void onCreateSituationButtonClicked(MouseEvent mouseEvent) {
+        try {
+            Floor selectedFloor = FloorComboBox.getSelectionModel().getSelectedItem();
+
+            Room room = RoomComboBox.getSelectionModel().getSelectedItem();
+
+            DetectedEvent detectedEvent = new DetectedEvent(selectedFloor.getName() + " " + room.getName() + " : "
+                    + EventHelper.getDescription(chosenEventType), LocalDateTime.now(), chosenEventType);
+            room.getDetectedEventList().add(detectedEvent);
+            try {
+                callback.onLogCreation(new Log(detectedEvent.getMessage(), LocalDateTime.now()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Exception in onCreateSituationButtonClicked():" + e.getMessage());
         }
     }
 }
