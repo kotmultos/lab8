@@ -3,7 +3,7 @@ package com.example.lab8.strategies;
 import com.example.lab8.models.Room;
 
 public class StrategyFactory {
-    public Strategy getStrategy(Room room) {
+    public static Strategy getStrategy(Room room) {
         var sum = room.getWindowsCount() * room.getDoorsCount() + room.getSquare();
 
         if (sum <= 10) return new RareStrategy();
