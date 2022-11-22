@@ -154,7 +154,6 @@ public class SecurityApplicationController implements Initializable {
     }
 
     protected void displayBuilding () {
-        System.out.println(building.toString());
         TreeItem<Room> root = BuildingStructureTableView.getRoot();
         root.getChildren().clear();
         root.setExpanded(true);
@@ -182,7 +181,6 @@ public class SecurityApplicationController implements Initializable {
         }
 
         displayBuilding();
-
     }
     @FXML
     public void onAddRoomButtonClick () {
@@ -201,10 +199,6 @@ public class SecurityApplicationController implements Initializable {
                     Floor selectedFloor = building.getFloorList().get(index);
                     Room newRoom = new Room("Кімната " + (selectedFloor.getRoomList().size() + 1), doors, windows, square);
                     selectedFloor.addRoom(newRoom);
-
-                    System.out.println(doors);
-                    System.out.println(windows);
-                    System.out.println(square);
 
                     displayBuilding();
                 }
@@ -238,7 +232,6 @@ public class SecurityApplicationController implements Initializable {
     }
 
     public void onLoadMenuItemAction(ActionEvent actionEvent) {
-
         try {
             FileInputStream fileInputStream = new FileInputStream("recentBuildingData.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -285,7 +278,6 @@ public class SecurityApplicationController implements Initializable {
     public void onStartSimulationButtonClick(MouseEvent mouseEvent) throws FileNotFoundException {
         if (!isSimulationStarted) {
             isSimulationStarted = true;
-            System.out.println("simulation started");
             FileOutputStream fileOutputStream = new FileOutputStream("logs.txt");
             LogCallback callback = new LogCallback() {
                 @Override

@@ -26,7 +26,7 @@ public class WatcherRunnable implements Runnable{
         while (true){
             try {
                 Random random = new Random();
-                int millis = random.nextInt(1500, 5000);
+                int millis = random.nextInt(1500, 15000);
 
                 Thread.sleep(millis);
 
