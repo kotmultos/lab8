@@ -286,7 +286,7 @@ public class SecurityApplicationController implements Initializable {
                 @Override
                 public synchronized void onLogCreation(Log log) {
                     try {
-                        fileOutputStream.write(("Time: " + log.getTime().toString() + "; Log: " + log.getMessage() + "\n").getBytes());
+                        fileOutputStream.write((log.toString()).getBytes());
                     } catch (IOException e){
                         System.out.println("IoException in SecurityApplicationController: " + e.getMessage());
                     } catch (Exception e){

@@ -22,6 +22,6 @@ public class Log implements Serializable {
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-        return getTime() + " : " + message;
+        return getTime() + " : " + message + "\n";
     }
 }
