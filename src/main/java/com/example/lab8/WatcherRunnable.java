@@ -26,7 +26,7 @@ public class WatcherRunnable implements Runnable{
         while (true){
             try {
                 Random random = new Random();
-                int millis = random.nextInt(1500, 15000);
+                int millis = random.nextInt(1500, 3000);
 
                 Thread.sleep(millis);
 
@@ -48,13 +48,13 @@ public class WatcherRunnable implements Runnable{
                 Log log = null;
                 DetectedEvent currentEvent = detectedEventList.get(i);
                 if(currentEvent.getType() == DetectedEventType.MovementEvent && (random.nextInt(1, 100) > 45)) {
-                    log = new Log("Рух, зафіксований " + currentEvent.getTime() + ", виправлено", LocalDateTime.now());
+                    log = new Log("Виправлено: Рух (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 } else if(currentEvent.getType() == DetectedEventType.PressureEvent && (random.nextInt(1, 100) > 20)) {
-                    log = new Log("Перевищення тиску, зафіксоване " + currentEvent.getTime() + ", виправлено", LocalDateTime.now());
+                    log = new Log("Виправлено: Тиск (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 }  else if(currentEvent.getType() == DetectedEventType.TemperatureEvent && (random.nextInt(1, 100) > 60)) {
-                    log = new Log("Перевищення температури, зафіксоване " + currentEvent.getTime() + ", виправлено", LocalDateTime.now());
+                    log = new Log("Виправлено: Температура (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 } else if(currentEvent.getType() == DetectedEventType.SoundEvent && (random.nextInt(1, 100) > 20)) {
-                    log = new Log("Рівень шуму, зафіксований " + currentEvent.getTime() + ", виправлено", LocalDateTime.now());
+                    log = new Log("Виправлено: Шум (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 }
 
                 if (log != null) {

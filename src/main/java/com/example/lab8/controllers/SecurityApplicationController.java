@@ -158,7 +158,6 @@ public class SecurityApplicationController implements Initializable {
         root.getChildren().clear();
         root.setExpanded(true);
         for (Floor floor: building.getFloorList()) {
-            System.out.println(floor.toString());
             TreeItem newItem = new TreeItem<>(new Room(floor.getName()));
 
             for (Room room: floor.getRoomList()) {
