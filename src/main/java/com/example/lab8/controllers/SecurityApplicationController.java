@@ -108,17 +108,25 @@ public class SecurityApplicationController implements Initializable {
                 return null;
             }
         });
+
+        RoomComboBox.setConverter(new StringConverter<Room>() {
+            @Override
+            public String toString(Room object) {
+                return object.getName();
+            }
+
+            @Override
+            public Room fromString(String string) {
+                return null;
+            }
+        });
+
         displayBuilding();
     }
 
     private void setFloorsToComboBox() {
-//        for (Floor floor: building.getFloorList()) {
-//            FloorComboBox.setItems((ObservableList<Floor>) building.getFloorList());
-            FloorComboBox.setItems(FXCollections.observableArrayList(building.getFloorList()));
-//        }
+        FloorComboBox.setItems(FXCollections.observableArrayList(building.getFloorList()));
     }
-
-
 
     protected void displayBuilding () {
         System.out.println(building.toString());
@@ -230,6 +238,15 @@ public class SecurityApplicationController implements Initializable {
             fileOutputStream.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void onFloorComboBoxItemSelected(ActionEvent actionEvent) {
+        Floor selectedFloor = FloorComboBox.getSelectionModel().getSelectedItem();
+        if (selectedFloor != null) {
+            RoomComboBox.setItems(FXCollections.observableArrayList(selectedFloor.getRoomList()));
+        } else {
+            RoomComboBox.getItems().clear();
         }
     }
 }
