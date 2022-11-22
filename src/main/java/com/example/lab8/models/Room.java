@@ -1,11 +1,14 @@
 package com.example.lab8.models;
 
+import com.example.lab8.detectedEvents.DetectedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
-@AllArgsConstructor
 public class Room implements Serializable {
     private String name;
     private Integer doorsCount;
@@ -14,9 +17,20 @@ public class Room implements Serializable {
 
     public Room(String name) {this.name = name; }
 
-    public Room(int doorsCount, int windowsCount, double square) {
+    public Room(String name, int doorsCount, int windowsCount, double square) {
+        this.name = name;
         this.doorsCount = doorsCount;
         this.windowsCount = windowsCount;
         this.square = square;
+        movementSensorsCount = doorsCount + windowsCount;
+        pressureSensorsCount = 2 * (doorsCount + windowsCount);
+        temperatureSensorsCount = (int)square / 30 + 1;
+        detectedEventList = new ArrayList<>();
     }
+
+    private Integer pressureSensorsCount;
+    private Integer temperatureSensorsCount;
+    private Integer movementSensorsCount;
+
+    private List<DetectedEvent> detectedEventList;
 }

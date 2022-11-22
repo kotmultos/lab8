@@ -1,5 +1,8 @@
 package com.example.lab8.controllers;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import com.example.lab8.models.*;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.io.*;
@@ -78,6 +82,8 @@ public class SecurityApplicationController implements Initializable {
     private Building building;
 
     private LocalDateTime currentTime;
+
+    private boolean isSimulationStarted;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         building = new Building();
@@ -85,10 +91,8 @@ public class SecurityApplicationController implements Initializable {
         Floor floor = new Floor("Поверх 1");
         floor.addRoom(room);
         building.addFloor(floor);
-        currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-        CurrentTimeLabel.setText(currentTime.format(formatter));
-        System.out.println("initialization");
+
+        isSimulationStarted = false;
 
         StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         DoorsTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("doorsCount"));
@@ -96,7 +100,14 @@ public class SecurityApplicationController implements Initializable {
         SquareTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("square"));
         BuildingStructureTableView.setRoot(new TreeItem(new Room("Будівля")));
 
-//
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            currentTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            CurrentTimeLabel.setText(currentTime.format(formatter));
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
+
         FloorComboBox.setConverter(new StringConverter<Floor>() {
             @Override
             public String toString(Floor object) {
@@ -249,4 +260,6 @@ public class SecurityApplicationController implements Initializable {
             RoomComboBox.getItems().clear();
         }
     }
+
+
 }
