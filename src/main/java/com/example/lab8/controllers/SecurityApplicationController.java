@@ -1,5 +1,7 @@
 package com.example.lab8.controllers;
 
+import com.example.lab8.logs.Log;
+import com.example.lab8.logs.LogCallback;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,7 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,6 +23,7 @@ import javafx.util.StringConverter;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,8 +52,6 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private TreeTableView<Room> BuildingStructureTableView;
     @FXML
-    private TreeTableView LogTableView;
-    @FXML
     private TreeTableColumn<Object, Object> StructureTableColumn;
     @FXML
     private TreeTableColumn<Object, Object> DoorsTableColumn;
@@ -57,9 +60,12 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private TreeTableColumn<Object, Object> SquareTableColumn;
     @FXML
-    private TreeTableColumn TimeTableColumn;
+    private TableView LogTableView;
     @FXML
-    private TreeTableColumn DescriptionTableColumn;
+    private TableColumn TimeTableColumn;
+    @FXML
+    private TableColumn DescriptionTableColumn;
+
     @FXML
     private TextField RoomDoorsInput;
     @FXML
@@ -83,6 +89,8 @@ public class SecurityApplicationController implements Initializable {
 
     private LocalDateTime currentTime;
 
+    private ObservableList<Log> logsList = FXCollections.observableArrayList();
+
     private boolean isSimulationStarted;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -91,6 +99,11 @@ public class SecurityApplicationController implements Initializable {
         Floor floor = new Floor("Поверх 1");
         floor.addRoom(room);
         building.addFloor(floor);
+
+        TimeTableColumn.setCellValueFactory(new PropertyValueFactory<Log, LocalDateTime>("time"));
+        DescriptionTableColumn.setCellValueFactory(new PropertyValueFactory<Log, String>("message"));
+
+        LogTableView.setItems(logsList);
 
         isSimulationStarted = false;
 
@@ -204,10 +217,12 @@ public class SecurityApplicationController implements Initializable {
     }
 
     public void onClearMenuItemAction(ActionEvent actionEvent) {
-        TreeItem<Room> root = BuildingStructureTableView.getRoot();
-        root.getChildren().clear();
-        root.setExpanded(true);
-        building = new Building();
+        if (!isSimulationStarted) {
+            TreeItem<Room> root = BuildingStructureTableView.getRoot();
+            root.getChildren().clear();
+            root.setExpanded(true);
+            building = new Building();
+        }
     }
 
     public void onExitMenuItemAction(ActionEvent actionEvent) {
@@ -231,6 +246,7 @@ public class SecurityApplicationController implements Initializable {
             System.out.println(newBuilding);
             building = newBuilding;
             displayBuilding();
+            isSimulationStarted = false;
         } catch (FileNotFoundException e) {
             System.out.println("Cannot find file: " + e.getMessage());
         } catch (IOException e) {
@@ -261,5 +277,32 @@ public class SecurityApplicationController implements Initializable {
         }
     }
 
+    public void onStartSimulationButtonClick(MouseEvent mouseEvent) throws FileNotFoundException {
+        if (!isSimulationStarted) {
+            isSimulationStarted = true;
+            System.out.println("simulation started");
+            FileOutputStream fileOutputStream = new FileOutputStream("logs.txt");
+            LogCallback callback = new LogCallback() {
+                @Override
+                public synchronized void onLogCreation(Log log) {
+                    try {
+                        fileOutputStream.write(("Time: " + log.getTime().toString() + "; Log: " + log.getMessage() + "\n").getBytes());
+                    } catch (IOException e){
+                        System.out.println("IoException in SecurityApplicationController: " + e.getMessage());
+                    } catch (Exception e){
+                        System.out.println("Exception in SecurityApplicationController: " + e.getMessage());
+                    }
 
+                    logsList.add(0, log);
+                }
+            };
+
+//            Starter starter = new Starter();
+//            try {
+//                starter.start(building, callback);
+//            } catch (InterruptedException e) {
+//                System.out.println("Interrupted Exception in MainController.startSimulation(). With message: " + e.getMessage());
+//            }
+        }
+    }
 }

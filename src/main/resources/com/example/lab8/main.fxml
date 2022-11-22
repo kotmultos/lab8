@@ -119,10 +119,10 @@
                </textFill>
             </Label>
             <Separator layoutX="239.0" orientation="VERTICAL" prefHeight="181.0" prefWidth="6.0" />
-            <TableView id="LogTableView" fx:id="LogTableView1" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
+            <TableView id="LogTableView" fx:id="LogTableView" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
               <columns>
-                <TableColumn id="TimeTableColumn" fx:id="TimeTableColumn1" prefWidth="216.79995727539062" resizable="false" text="Час події" />
-                <TableColumn id="DescriptionTableColumn" fx:id="DescriptionTableColumn1" prefWidth="320.0" resizable="false" text="Опис" />
+                <TableColumn id="TimeTableColumn" fx:id="TimeTableColumn" prefWidth="216.79995727539062" resizable="false" text="Час події" />
+                <TableColumn id="DescriptionTableColumn" fx:id="DescriptionTableColumn" prefWidth="320.0" resizable="false" text="Опис" />
               </columns>
             </TableView>
             <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="190.0" prefWidth="5.0" style="-fx-min-height: 650;" />
@@ -139,6 +139,7 @@
             <RadioButton id="PressureRadioButton" fx:id="PressureRadioButton" layoutX="253.0" layoutY="100.0" mnemonicParsing="false" text="Тиск" toggleGroup="$SituationRadioGroup" />
             <RadioButton id="MovementRadioButton" fx:id="MovementRadioButton" layoutX="253.0" layoutY="125.0" mnemonicParsing="false" text="Рух" toggleGroup="$SituationRadioGroup" />
             <Button id="CreateSituationButton" fx:id="CreateSituationButton" layoutX="359.0" layoutY="142.0" mnemonicParsing="false" text="Генерувати" />
+            <Button fx:id="StartSimulationButton" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#onStartSimulationButtonClick" text="Почати симуляцію" />
          </children>
       </AnchorPane>
     <HBox id="StatusBar" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
