@@ -11,7 +11,9 @@ import java.util.List;
 
 @Data
 public class Floor implements Serializable {
-    public Floor () {
+    private  String name;
+    public Floor (String name) {
+        this.name = name;
         roomList = new ArrayList<Room>();
     }
 

@@ -10,4 +10,6 @@ module com.example.lab8 {
     exports com.example.lab8;
     opens com.example.lab8.controllers;
     exports com.example.lab8.controllers;
+    opens models;
+    exports models;
 }

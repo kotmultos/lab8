@@ -1,9 +1,9 @@
 package com.example.lab8.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import models.Building;
 import models.Floor;
@@ -33,17 +33,17 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private Button CreateSituationButton;
     @FXML
-    private TreeTableView BuildingStructureTableView;
+    private TreeTableView<Room> BuildingStructureTableView;
     @FXML
     private TreeTableView LogTableView;
     @FXML
-    private TreeTableColumn StructureTableColumn;
+    private TreeTableColumn<Object, Object> StructureTableColumn;
     @FXML
-    private TreeTableColumn DoorsTableColumn;
+    private TreeTableColumn<Object, Object> DoorsTableColumn;
     @FXML
-    private TreeTableColumn WindowsTableColumn;
+    private TreeTableColumn<Object, Object> WindowsTableColumn;
     @FXML
-    private TreeTableColumn SquareTableColumn;
+    private TreeTableColumn<Object, Object> SquareTableColumn;
     @FXML
     private TreeTableColumn TimeTableColumn;
     @FXML
@@ -73,8 +73,8 @@ public class SecurityApplicationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         building = new Building();
-        Room room = new Room(2, 4, 5);
-        Floor floor = new Floor();
+        Room room = new Room("Кімната 1", 2, 4, 5.5);
+        Floor floor = new Floor("Поверх 1");
         floor.addRoom(room);
         building.addFloor(floor);
         currentTime = LocalDateTime.now();
@@ -82,31 +82,48 @@ public class SecurityApplicationController implements Initializable {
         CurrentTimeLabel.setText(currentTime.format(formatter));
         System.out.println("initialization");
 
-//        try {
-//            StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Структура"));
-//            BuildingStructureTableView.setRoot(new TreeItem<>(new Room("hello")));
-//        }
-//        catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+
+        StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        DoorsTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("doorsCount"));
+        WindowsTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("windowsCount"));
+        SquareTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("square"));
+        BuildingStructureTableView.setRoot(new TreeItem(new Room("Будівля")));
+        displayBuilding();
+    }
+
+    protected void displayBuilding () {
+        System.out.println(building.toString());
+        TreeItem<Room> root = BuildingStructureTableView.getRoot();
+        root.getChildren().clear();
+        root.setExpanded(true);
+        for (Floor floor: building.getFloorList()) {
+//            var item = root.getChildren();
+            System.out.println(floor.toString());
+            TreeItem newItem = new TreeItem<>(new Room(floor.getName()));
+
+            for (Room room: floor.getRoomList()) {
+                newItem.getChildren().add(new TreeItem<>(room));
+//                System.out.println(room.toString());
+            }
+            newItem.setExpanded(true);
+//            root.getChildren().add(new TreeItem<>(new Room(floor.getName())));
+            root.getChildren().add(newItem);
+        }
+
+        BuildingStructureTableView.setRoot(root);
 
     }
 
     @FXML
     protected void onAddFloorButtonClicked () {
         try {
-            building.addFloor(new Floor());
+            building.addFloor(new Floor("Поверх " + (building.getFloorList().size() + 1)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(building.toString());
-//
-//        if (BuildingStructureTableView.getRoot() != null) {
-//
-//        } else {
-//            BuildingStructureTableView.add()
-//        }
+        displayBuilding();
+
     }
     @FXML
     public void onAddRoomButtonClick () {
@@ -115,11 +132,36 @@ public class SecurityApplicationController implements Initializable {
             Integer windows = Integer.valueOf(RoomsWindowsInput.getText());
             Double square = Double.valueOf(RoomSquareInput.getText());
 
-            System.out.println(doors);
-            System.out.println(windows);
-            System.out.println(square);
+            if (((Room) ((TreeItem) BuildingStructureTableView.getSelectionModel().getSelectedItem()).getValue()).getName().contains("Поверх")) {
+                var selectedItem = (TreeItem) (BuildingStructureTableView.getSelectionModel().getSelectedItem());
+
+                var index = selectedItem.getParent().getChildren().indexOf(selectedItem);
+                System.out.println(index);
+
+                Floor selectedFloor = building.getFloorList().get(index);
+                Room newRoom = new Room("Кімната " + (selectedFloor.getRoomList().size() + 1), doors, windows, square);
+                selectedFloor.addRoom(newRoom);
+
+                System.out.println(doors);
+                System.out.println(windows);
+                System.out.println(square);
+
+                displayBuilding();
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        finally {
+            RoomDoorsInput.setText("");
+            RoomsWindowsInput.setText("");
+            RoomSquareInput.setText("");
+        }
+    }
+
+    public void onClearMenuItemAction(ActionEvent actionEvent) {
+        TreeItem<Room> root = BuildingStructureTableView.getRoot();
+        root.getChildren().clear();
+        root.setExpanded(true);
+        building = new Building();
     }
 }

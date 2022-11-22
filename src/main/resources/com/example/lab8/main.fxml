@@ -63,14 +63,9 @@
           <items>
             <MenuItem id="LoadMenuItem" fx:id="LoadMenuItem" mnemonicParsing="false" text="Завантажити з файлу" />
           <MenuItem id="SaveMenuItem" fx:id="SaveMenuItem" mnemonicParsing="false" text="Зберегти" />
-          <MenuItem id="ClearMenuitem" fx:id="ClearMenuitem" mnemonicParsing="false" text="Очистити" />
+          <MenuItem id="ClearMenuitem" fx:id="ClearMenuitem" mnemonicParsing="false" onAction="#onClearMenuItemAction" text="Очистити" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem id="ExitMenuItem" fx:id="ExitMenuItem" mnemonicParsing="false" text="Вийти" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Допомога">
-          <items>
-            <MenuItem id="AboutMenuItem" fx:id="AboutMenuItem" mnemonicParsing="false" text="Про Security Application" />
           </items>
         </Menu>
       </menus>
@@ -110,9 +105,9 @@
             <TreeTableView fx:id="BuildingStructureTableView" layoutY="215.0" prefHeight="438.0" prefWidth="448.0">
                <columns>
                   <TreeTableColumn fx:id="StructureTableColumn" prefWidth="112.80001527070999" resizable="false" text="Структура" />
-                  <TreeTableColumn id="DoorsTableColumn" fx:id="DoorsTableColumn" prefWidth="123.19998168945312" resizable="false" text="Кількість дверей" />
-                  <TreeTableColumn id="WindowsTableColumn" fx:id="WindowsTableColumn" prefWidth="118.39997863769531" resizable="false" text="Кількість вікон" />
-                  <TreeTableColumn id="SquareTableColumn" fx:id="SquareTableColumn" prefWidth="96.79998779296875" resizable="false" text="Площа" />
+                  <TreeTableColumn id="DoorsTableColumn" fx:id="DoorsTableColumn" prefWidth="118.4000244140625" resizable="false" text="Кількість дверей" />
+                  <TreeTableColumn id="WindowsTableColumn" fx:id="WindowsTableColumn" prefWidth="117.59999084472656" resizable="false" text="Кількість вікон" />
+                  <TreeTableColumn id="SquareTableColumn" fx:id="SquareTableColumn" prefWidth="95.20001220703125" resizable="false" text="Площа" />
                </columns>
             </TreeTableView>
             <Label alignment="CENTER" layoutX="136.0" layoutY="185.0" style="&#10;" text="Структура будівлі" textAlignment="CENTER" wrapText="false">
