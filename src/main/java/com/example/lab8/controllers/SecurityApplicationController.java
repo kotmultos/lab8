@@ -190,21 +190,25 @@ public class SecurityApplicationController implements Initializable {
             Integer windows = Integer.valueOf(RoomsWindowsInput.getText());
             Double square = Double.valueOf(RoomSquareInput.getText());
 
-            if (((Room) ((TreeItem) BuildingStructureTableView.getSelectionModel().getSelectedItem()).getValue()).getName().contains("Поверх")) {
-                var selectedItem = (TreeItem) (BuildingStructureTableView.getSelectionModel().getSelectedItem());
+            if(doors > 0 && doors < 15 && windows > 0 && windows < 20 && square >= 0.01) {
+                if (((Room) ((TreeItem) BuildingStructureTableView.getSelectionModel().getSelectedItem()).getValue()).getName().contains("Поверх")) {
+                    var selectedItem = (TreeItem) (BuildingStructureTableView.getSelectionModel().getSelectedItem());
 
-                var index = selectedItem.getParent().getChildren().indexOf(selectedItem);
-                System.out.println(index);
+                    var index = selectedItem.getParent().getChildren().indexOf(selectedItem);
+                    System.out.println(index);
 
-                Floor selectedFloor = building.getFloorList().get(index);
-                Room newRoom = new Room("Кімната " + (selectedFloor.getRoomList().size() + 1), doors, windows, square);
-                selectedFloor.addRoom(newRoom);
+                    Floor selectedFloor = building.getFloorList().get(index);
+                    Room newRoom = new Room("Кімната " + (selectedFloor.getRoomList().size() + 1), doors, windows, square);
+                    selectedFloor.addRoom(newRoom);
 
-                System.out.println(doors);
-                System.out.println(windows);
-                System.out.println(square);
+                    System.out.println(doors);
+                    System.out.println(windows);
+                    System.out.println(square);
 
-                displayBuilding();
+                    displayBuilding();
+                }
+            } else {
+                System.out.println("Введено недопустимі значення для інформації про кімнату");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
