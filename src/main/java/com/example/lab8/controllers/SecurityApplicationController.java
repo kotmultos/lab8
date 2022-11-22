@@ -158,6 +158,26 @@ public class SecurityApplicationController implements Initializable {
         });
 
         displayBuilding();
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("logs.txt");
+            callback = new LogCallback() {
+                @Override
+                public synchronized void onLogCreation(Log log) {
+                    try {
+                        fileOutputStream.write((log.toString()).getBytes());
+                    } catch (IOException e){
+                        System.out.println("IoException in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
+                    } catch (Exception e){
+                        System.out.println("Exception in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
+                    }
+
+                    logsList.add(0, log);
+                }
+            };
+        } catch (Exception e) {
+            System.out.println("Exception in initialize(): " + e.getMessage());
+        }
     }
 
     private void setFloorsToComboBox() {
@@ -296,21 +316,6 @@ public class SecurityApplicationController implements Initializable {
     public void onStartSimulationButtonClick(MouseEvent mouseEvent) throws FileNotFoundException {
         if (!isSimulationStarted) {
             isSimulationStarted = true;
-            FileOutputStream fileOutputStream = new FileOutputStream("logs.txt");
-            callback = new LogCallback() {
-                @Override
-                public synchronized void onLogCreation(Log log) {
-                    try {
-                        fileOutputStream.write((log.toString()).getBytes());
-                    } catch (IOException e){
-                        System.out.println("IoException in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
-                    } catch (Exception e){
-                        System.out.println("Exception in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
-                    }
-
-                    logsList.add(0, log);
-                }
-            };
 
             starter = new Starter();
             try {

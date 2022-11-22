@@ -16,7 +16,10 @@ public class DetectedEvent implements Serializable {
 
     public String getTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-        return LocalDateTime.now().format(formatter);
+        return time.format(formatter);
+    }
+    public LocalDateTime getTimeLocalDateTime() {
+        return time;
     }
 
     @Override

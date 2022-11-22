@@ -122,7 +122,7 @@
             <TableView id="LogTableView" fx:id="LogTableView" layoutX="458.0" layoutY="29.0" prefHeight="624.0" prefWidth="539.0">
               <columns>
                 <TableColumn id="TimeTableColumn" fx:id="TimeTableColumn" prefWidth="142.40008544921875" resizable="false" text="Час події" />
-                <TableColumn id="DescriptionTableColumn" fx:id="DescriptionTableColumn" prefWidth="394.39996337890625" resizable="false" text="Опис" />
+                <TableColumn id="DescriptionTableColumn" fx:id="DescriptionTableColumn" maxWidth="390.0" prefWidth="394.39996337890625" resizable="false" text="Опис" />
               </columns>
             </TableView>
             <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="190.0" prefWidth="5.0" style="-fx-min-height: 650;" />
