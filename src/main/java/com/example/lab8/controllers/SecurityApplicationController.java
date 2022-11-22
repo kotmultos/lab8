@@ -93,6 +93,8 @@ public class SecurityApplicationController implements Initializable {
     private ObservableList<Log> logsList = FXCollections.observableArrayList();
 
     private boolean isSimulationStarted;
+
+    private Starter starter;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         building = new Building();
@@ -219,6 +221,7 @@ public class SecurityApplicationController implements Initializable {
             TreeItem<Room> root = BuildingStructureTableView.getRoot();
             root.getChildren().clear();
             root.setExpanded(true);
+            LogTableView.getItems().clear();
             building = new Building();
         }
     }
@@ -231,25 +234,27 @@ public class SecurityApplicationController implements Initializable {
     }
 
     public void onLoadMenuItemAction(ActionEvent actionEvent) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream("recentBuildingData.ser");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        if(!isSimulationStarted){
+            try {
+                FileInputStream fileInputStream = new FileInputStream("recentBuildingData.ser");
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            Building newBuilding = (Building) objectInputStream.readObject();
+                Building newBuilding = (Building) objectInputStream.readObject();
 
-            objectInputStream.close();
-            fileInputStream.close();
+                objectInputStream.close();
+                fileInputStream.close();
 
-            System.out.println(newBuilding);
-            building = newBuilding;
-            displayBuilding();
-            isSimulationStarted = false;
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot find file: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("Building not found: " + e.getMessage());
+                building = newBuilding;
+                displayBuilding();
+            } catch (FileNotFoundException e) {
+                System.out.println("Cannot find file: " + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("IOException: " + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.out.println("Building not found: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Під ча симуляції не можна змінити конфігурацію системи.");
         }
     }
 
@@ -293,12 +298,19 @@ public class SecurityApplicationController implements Initializable {
                 }
             };
 
-            Starter starter = new Starter();
+            starter = new Starter();
             try {
                 starter.start(building, callback);
             } catch (InterruptedException e) {
                 System.out.println("Interrupted Exception in SecurityApplicationController.onStartSimulationButtonClick(): " + e.getMessage());
             }
+        }
+    }
+
+    public void onStopSimulationButtonClick(MouseEvent mouseEvent) {
+        if(isSimulationStarted) {
+            starter.stop();
+            isSimulationStarted = false;
         }
     }
 }

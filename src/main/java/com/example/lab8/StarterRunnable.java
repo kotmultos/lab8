@@ -11,13 +11,19 @@ import lombok.Data;
 public class StarterRunnable implements Runnable {
     private Building building;
     private LogCallback logCallback;
+    public StarterRunnable(Building building, LogCallback logCallback) {
+        this.building = building;
+        this.logCallback = logCallback;
+    }
+    private Thread twr ;
+    private Thread tsr;
 
     @Override
     public void run() {
         WatcherRunnable wr = new WatcherRunnable(building, logCallback);
         StrategyRunnable sr = new StrategyRunnable(building, logCallback);
-        Thread twr = new Thread(wr);
-        Thread tsr = new Thread(sr);
+        twr = new Thread(wr);
+        tsr = new Thread(sr);
         try {
             twr.start();
             tsr.start();
@@ -27,5 +33,10 @@ public class StarterRunnable implements Runnable {
             System.out.println("Exception occurred in method run in StarterRunnable: " + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public void stop () {
+        twr.stop();
+        tsr.stop();
     }
 }
