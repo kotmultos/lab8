@@ -5,17 +5,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import models.Building;
-import models.Floor;
-import models.Room;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import com.example.lab8.models.*;
+
+import java.io.*;
 import java.net.URL;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SecurityApplicationController implements Initializable {
+
+    @FXML
+    private VBox window;
    @FXML
    private MenuItem LoadMenuItem;
    @FXML
@@ -163,5 +167,47 @@ public class SecurityApplicationController implements Initializable {
         root.getChildren().clear();
         root.setExpanded(true);
         building = new Building();
+    }
+
+    public void onExitMenuItemAction(ActionEvent actionEvent) {
+        // get a handle to the stage
+        Stage stage = (Stage) window.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+
+    public void onLoadMenuItemAction(ActionEvent actionEvent) {
+        Building newBuilding = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream("recentBuildingData.ser");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            newBuilding = (Building) objectInputStream.readObject();
+
+            objectInputStream.close();
+            fileInputStream.close();
+
+            System.out.println(newBuilding);
+            building = newBuilding;
+            displayBuilding();
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot find file: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Building not found: " + e.getMessage());
+        }
+    }
+
+    public synchronized void onSaveMenuItemAction(ActionEvent actionEvent) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("recentBuildingData.ser");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(building);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

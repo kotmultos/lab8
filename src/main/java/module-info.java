@@ -8,8 +8,10 @@ module com.example.lab8 {
 
     opens com.example.lab8 to javafx.fxml;
     exports com.example.lab8;
+
     opens com.example.lab8.controllers;
     exports com.example.lab8.controllers;
-    opens models;
-    exports models;
+
+    opens com.example.lab8.models;
+    exports com.example.lab8.models;
 }

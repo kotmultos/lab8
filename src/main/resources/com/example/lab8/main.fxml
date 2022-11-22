@@ -55,17 +55,17 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab8.controllers.SecurityApplicationController">
+<VBox fx:id="window" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab8.controllers.SecurityApplicationController">
   <children>
     <MenuBar id="MenuBar" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Файл">
           <items>
-            <MenuItem id="LoadMenuItem" fx:id="LoadMenuItem" mnemonicParsing="false" text="Завантажити з файлу" />
-          <MenuItem id="SaveMenuItem" fx:id="SaveMenuItem" mnemonicParsing="false" text="Зберегти" />
+            <MenuItem id="LoadMenuItem" fx:id="LoadMenuItem" mnemonicParsing="false" onAction="#onLoadMenuItemAction" text="Завантажити з файлу" />
+          <MenuItem id="SaveMenuItem" fx:id="SaveMenuItem" mnemonicParsing="false" onAction="#onSaveMenuItemAction" text="Зберегти" />
           <MenuItem id="ClearMenuitem" fx:id="ClearMenuitem" mnemonicParsing="false" onAction="#onClearMenuItemAction" text="Очистити" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem id="ExitMenuItem" fx:id="ExitMenuItem" mnemonicParsing="false" text="Вийти" />
+            <MenuItem id="ExitMenuItem" fx:id="ExitMenuItem" mnemonicParsing="false" onAction="#onExitMenuItemAction" text="Вийти" />
           </items>
         </Menu>
       </menus>
@@ -102,7 +102,7 @@
                   <Color red="0.624" green="0.624" blue="0.624" fx:id="x6" />
                </textFill>
             </Label>
-            <TreeTableView fx:id="BuildingStructureTableView" layoutY="215.0" prefHeight="438.0" prefWidth="448.0">
+            <TreeTableView fx:id="BuildingStructureTableView" layoutX="2.0" layoutY="215.0" prefHeight="438.0" prefWidth="448.0">
                <columns>
                   <TreeTableColumn fx:id="StructureTableColumn" prefWidth="112.80001527070999" resizable="false" text="Структура" />
                   <TreeTableColumn id="DoorsTableColumn" fx:id="DoorsTableColumn" prefWidth="118.4000244140625" resizable="false" text="Кількість дверей" />
