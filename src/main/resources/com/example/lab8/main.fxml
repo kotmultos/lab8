@@ -129,8 +129,8 @@
             <TextField id="RoomDoorsInput" fx:id="RoomDoorsInput" layoutX="126.0" layoutY="76.0" prefHeight="26.0" prefWidth="101.0" />
             <TextField id="RoomsWindowsInput" fx:id="RoomsWindowsInput" layoutX="126.0" layoutY="111.0" prefHeight="26.0" prefWidth="101.0" />
             <TextField id="RoomSquareInput" fx:id="RoomSquareInput" layoutX="126.0" layoutY="146.0" prefHeight="26.0" prefWidth="101.0" />
-            <ComboBox id="FloorComboBox" fx:id="FloorComboBox" layoutX="251.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Поверх" />
-            <ComboBox id="RoomComboBox" fx:id="RoomComboBox" layoutX="352.0" layoutY="35.0" prefHeight="26.0" prefWidth="91.0" promptText="Кімната" />
+            <ComboBox id="FloorComboBox" fx:id="FloorComboBox" layoutX="244.0" layoutY="35.0" prefHeight="26.0" prefWidth="98.0" promptText="Поверх" />
+            <ComboBox id="RoomComboBox" fx:id="RoomComboBox" layoutX="352.0" layoutY="35.0" prefHeight="26.0" prefWidth="98.0" promptText="Кімната" />
             <RadioButton id="TemperatureRadioButton" fx:id="TemperatureRadioButton" layoutX="253.0" layoutY="75.0" mnemonicParsing="false" selected="true" text="Температура">
                <toggleGroup>
                   <ToggleGroup fx:id="SituationRadioGroup" />

@@ -1,5 +1,7 @@
 package com.example.lab8.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,11 +11,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import com.example.lab8.models.*;
+import javafx.util.StringConverter;
 
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SecurityApplicationController implements Initializable {
@@ -59,7 +63,7 @@ public class SecurityApplicationController implements Initializable {
     @FXML
     private TextField RoomSquareInput;
     @FXML
-    private ComboBox FloorComboBox;
+    private ComboBox<Floor> FloorComboBox;
     @FXML
     private ComboBox RoomComboBox;
     @FXML
@@ -86,14 +90,35 @@ public class SecurityApplicationController implements Initializable {
         CurrentTimeLabel.setText(currentTime.format(formatter));
         System.out.println("initialization");
 
-
         StructureTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
         DoorsTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("doorsCount"));
         WindowsTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("windowsCount"));
         SquareTableColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("square"));
         BuildingStructureTableView.setRoot(new TreeItem(new Room("Будівля")));
+
+//
+        FloorComboBox.setConverter(new StringConverter<Floor>() {
+            @Override
+            public String toString(Floor object) {
+                return object.getName();
+            }
+
+            @Override
+            public Floor fromString(String string) {
+                return null;
+            }
+        });
         displayBuilding();
     }
+
+    private void setFloorsToComboBox() {
+//        for (Floor floor: building.getFloorList()) {
+//            FloorComboBox.setItems((ObservableList<Floor>) building.getFloorList());
+            FloorComboBox.setItems(FXCollections.observableArrayList(building.getFloorList()));
+//        }
+    }
+
+
 
     protected void displayBuilding () {
         System.out.println(building.toString());
@@ -101,21 +126,18 @@ public class SecurityApplicationController implements Initializable {
         root.getChildren().clear();
         root.setExpanded(true);
         for (Floor floor: building.getFloorList()) {
-//            var item = root.getChildren();
             System.out.println(floor.toString());
             TreeItem newItem = new TreeItem<>(new Room(floor.getName()));
 
             for (Room room: floor.getRoomList()) {
                 newItem.getChildren().add(new TreeItem<>(room));
-//                System.out.println(room.toString());
             }
             newItem.setExpanded(true);
-//            root.getChildren().add(new TreeItem<>(new Room(floor.getName())));
             root.getChildren().add(newItem);
         }
 
         BuildingStructureTableView.setRoot(root);
-
+        setFloorsToComboBox();
     }
 
     @FXML
@@ -177,12 +199,12 @@ public class SecurityApplicationController implements Initializable {
     }
 
     public void onLoadMenuItemAction(ActionEvent actionEvent) {
-        Building newBuilding = null;
+
         try {
             FileInputStream fileInputStream = new FileInputStream("recentBuildingData.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-            newBuilding = (Building) objectInputStream.readObject();
+            Building newBuilding = (Building) objectInputStream.readObject();
 
             objectInputStream.close();
             fileInputStream.close();
