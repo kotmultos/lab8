@@ -275,8 +275,13 @@ public class SecurityApplicationController implements Initializable {
 
                 objectInputStream.close();
                 fileInputStream.close();
+                FloorComboBox.getItems().clear();
+                RoomComboBox.getItems().clear();
 
                 building = newBuilding;
+
+                LogTableView.getItems().clear();
+
                 displayBuilding();
             } catch (FileNotFoundException e) {
                 System.out.println("Cannot find file: " + e.getMessage());

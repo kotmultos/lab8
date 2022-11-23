@@ -48,13 +48,13 @@ public class WatcherRunnable implements Runnable{
                 Log log = null;
                 DetectedEvent currentEvent = detectedEventList.get(i);
                 if(currentEvent.getType() == DetectedEventType.MovementEvent && (random.nextInt(1, 100) > 45)) {
-                    log = new Log("Виправлено: Рух (" + currentEvent.getTime() + ")", currentEvent.getTimeLocalDateTime());
+                    log = new Log("Виправлено: Рух (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 } else if(currentEvent.getType() == DetectedEventType.PressureEvent && (random.nextInt(1, 100) > 20)) {
-                    log = new Log("Виправлено: Тиск (" + currentEvent.getTime() + ")", currentEvent.getTimeLocalDateTime());
+                    log = new Log("Виправлено: Тиск (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 }  else if(currentEvent.getType() == DetectedEventType.TemperatureEvent && (random.nextInt(1, 100) > 60)) {
-                    log = new Log("Виправлено: Температура (" + currentEvent.getTime() + ")", currentEvent.getTimeLocalDateTime());
+                    log = new Log("Виправлено: Температура (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 } else if(currentEvent.getType() == DetectedEventType.SoundEvent && (random.nextInt(1, 100) > 20)) {
-                    log = new Log("Виправлено: Шум (" + currentEvent.getTime() + ")", currentEvent.getTimeLocalDateTime());
+                    log = new Log("Виправлено: Шум (" + currentEvent.getTime() + ")", LocalDateTime.now());
                 }
 
                 if (log != null) {
